@@ -1,0 +1,137 @@
+.sidebar {
+    position: fixed;
+    background-color: #2a1e1e;
+    color:beige;
+    transition: all 1s;
+    height: 100%;
+}
+/* HEADER */
+.sidebar .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem;
+    background-color: crimson;
+    max-width: 258px;
+    min-height: 3rem;
+}
+.sidebar .header .title {
+    transition: 1s;
+    margin-left: 0px;
+    overflow: hidden;
+}
+.sidebar:not(.expanded) .header .title {
+    transition: 2s;
+    opacity: 0;
+    margin-top: -100%;
+    overflow: hidden;
+}
+.sidebar .header .toggle {
+    min-width: 1rem;
+    margin: 0 1.6rem;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+/* CONTENT */
+.sidebar {
+    transition: 1s;
+    width: 258px;
+    min-width: 258px;
+}
+.sidebar:not(.expanded) {
+    width: 70px;
+    min-width: 70px;
+}
+/* LISTA DE MENUS */
+.sidebar .content .links {
+    list-style:none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+/* GRUPO ITEM DE MENU */
+.sidebar .content .links .option {
+    width: 100%;
+}
+/* ITEM MENU */
+.sidebar .content .links .item {
+    cursor: pointer;
+    display: flex;
+    position: relative;
+    align-items: center;
+    height: 3rem;
+    width: 100%;
+}
+.sidebar .content .links .item.active,
+.sidebar .content .links .item:hover {
+    background-color: grey;
+    color: white;
+}
+/* ICONO */
+.sidebar .content .links .item .menu-icon{
+    min-width: 1rem;
+    margin: 0 1.6rem;
+    overflow: hidden;
+}
+.sidebar .content .links .item .menu-icon.not::after{
+    content:"H"
+}
+/* NOMBRE MENU */
+.sidebar .content .links .item div {
+    display: flex;
+    overflow: hidden;
+}
+.sidebar .content .links .item .title {
+    transition: 1s;
+    overflow: hidden;
+    min-width: max-content;
+}
+.sidebar:not(.expanded) .content .links .item .title {
+    display: none;
+}
+/* TOOLTIP */
+.sidebar .content .links .item .tooltip {
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translate(100%, -50%);
+    color: black;
+    width: max-content;
+    display: none;
+    box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.2);
+    padding: .6rem;
+    border-radius: .6rem;
+    line-height: 1.8rem;
+    z-index: 20;
+    text-align: center;
+}
+.sidebar:not(.expanded) .content .links .item:hover .tooltip {
+    display: block;
+}
+/* SUBMENU */
+.sidebar .content .links .children .item {
+    transition: 1s;
+    padding-left: 30px;
+    background-color: #473737;
+    height: 3rem;
+    opacity: 1;
+}
+.sidebar .content .links .children .item:active,
+.sidebar .content .links .children .item:hover {
+    background-color: orange;
+    color: white;
+}
+.sidebar:not(.expanded) .content .links .option:hover .children .item {
+    height: 3rem;
+    opacity: 1;
+    padding: 0px;
+}
+.sidebar:not(.expanded) .content .links .children .item {
+    height: 0rem;
+    opacity: 0;
+    padding: 0;
+}
