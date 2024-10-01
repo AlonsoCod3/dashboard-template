@@ -1,5 +1,5 @@
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -15,10 +15,12 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  public isOpen:boolean = true
   public image:boolean = false
 
   public NAME:string = "Dashboard Template"
+
+  @Input() isOpen: boolean = false
+  @Output() toggleSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   // url - icon - nombre - sub
   public routes = [
@@ -29,4 +31,9 @@ export class SidebarComponent {
     ]
     ],
   ]
+  public sidebarToggle(){
+    this.isOpen = !this.isOpen
+    this.toggleSidebar.emit(this.isOpen)
+    console.log(this.isOpen)
+  }
 }
