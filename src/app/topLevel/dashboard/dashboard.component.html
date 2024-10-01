@@ -7,7 +7,10 @@
     <div class="main">
         <app-sidebar (toggleSidebar)="sidebarExpanded = $event"></app-sidebar>
         <div class="content" [ngClass]="{ 'sidebarExpanded': sidebarExpanded }">
-            <router-outlet></router-outlet>
+            <div class="pages">
+                <router-outlet></router-outlet>
+            </div>
+            <app-footer></app-footer>
         </div>
     </div>
 </div>
