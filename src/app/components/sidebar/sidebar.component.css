@@ -100,7 +100,7 @@
     color: var(--sidebar-text-active);
     border-right: 1px solid #404852;
 }
-.sidebar .content .links .item:hover {
+.sidebar .content .links .item:not(.active):hover {
     background-color: var(--sidebar-menu-hover);
     color: var(--sidebar-menu-text-hover);
     border-right: 1px solid #404852;
