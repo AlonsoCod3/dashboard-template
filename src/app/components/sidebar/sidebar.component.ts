@@ -34,6 +34,5 @@ export class SidebarComponent {
   public sidebarToggle(){
     this.isOpen = !this.isOpen
     this.toggleSidebar.emit(this.isOpen)
-    console.log(this.isOpen)
   }
 }
