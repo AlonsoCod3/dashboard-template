@@ -1,0 +1,19 @@
+<nav>
+    <div class="main">
+        <div class="child hamburger">
+            <button>
+                <!-- <i></i> -->
+                <span>III</span>
+            </button>
+        </div>
+        <div class="child content">
+            <button>
+                <div class="profile-image">
+                    <img *ngIf="image" src="" alt="">
+                    <div class="not-image" *ngIf="!image"></div>
+                </div>
+                <div class="name">usuario@gmail.com</div>
+            </button>
+        </div>
+    </div>
+</nav>

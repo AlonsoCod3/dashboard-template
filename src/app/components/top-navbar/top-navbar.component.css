@@ -1,0 +1,66 @@
+/* NAV */
+nav {
+    width: 100%;
+    height: 50px;
+    background-color: white;
+    z-index: 30;
+}
+/* CONTAINER */
+.main {
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
+}
+/* COLUMNAS */
+.main .child {
+    border: 1px solid red;
+    width: 100%;
+    margin: 5px 1rem;
+}
+/* BOTONES EN COLUMNAS */
+.child button {
+    border: none;
+}
+
+/* HAMBURGER ICON */
+
+/* PROFILE IMAGE */
+.content button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    height: 100%;
+}
+.content button > * {
+    margin-inline: 5px;
+}
+.profile-image {
+    width: 40px;
+    height: 40px;
+    margin: auto;
+    border-radius: 100px;
+    background-color: white;
+}
+.profile-img img {
+    width: 100%;
+    height: 100%;
+    border: 100%;
+}
+.profile-image .not-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: blue;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 40px;
+}
+.profile-image .not-image::after {
+    /* content: attr(data-name) */
+    /* content: "U" */
+    content: "\e604";
+}
+
+/* NAME USER */
