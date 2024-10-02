@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { SidebarComponent } from "../../components/sidebar/sidebar.component";
 import { NgClass } from '@angular/common';
 import { FooterComponent } from "../../components/footer/footer.component";
+import { TopNavbarComponent } from "../../components/top-navbar/top-navbar.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,8 @@ import { FooterComponent } from "../../components/footer/footer.component";
     RouterModule,
     NgClass,
     SidebarComponent,
-    FooterComponent
+    FooterComponent,
+    TopNavbarComponent
 ],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
