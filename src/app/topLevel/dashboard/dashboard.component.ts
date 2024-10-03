@@ -19,5 +19,5 @@ import { TopNavbarComponent } from "../../components/top-navbar/top-navbar.compo
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
-  public sidebarExpanded:boolean
+  public sidebarExpanded:boolean = false
 }

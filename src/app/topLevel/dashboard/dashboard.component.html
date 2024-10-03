@@ -1,11 +1,11 @@
 <div class="main-container">
     <!-- top -->
      <div class="header">
-        <app-top-navbar></app-top-navbar>
+        <app-top-navbar (toggleSidebar)="sidebarExpanded = $event" [isOpen]="sidebarExpanded"></app-top-navbar>
     </div>
     <!-- content -->
     <div class="main">
-        <app-sidebar (toggleSidebar)="sidebarExpanded = $event"></app-sidebar>
+        <app-sidebar (toggleSidebar)="sidebarExpanded = $event" [isOpen]="sidebarExpanded"></app-sidebar>
         <div class="content" [ngClass]="{ 'sidebarExpanded': sidebarExpanded }">
             <div class="pages">
                 <router-outlet></router-outlet>
