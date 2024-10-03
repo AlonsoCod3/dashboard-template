@@ -1,9 +1,27 @@
+/* ALL CONTENT */
 .main {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
+    background-color: grey;
 }
+/* PAGINA/CARD */
 .content {
+    position: relative;
+    padding: 1.8rem;
+}
+/* NOMBRE DE PAGINA */
+.content section.header {
     display: flex;
-    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+}
+/* BARRA BUSQUEDA/ FILTROS */
+.filter-bars {
+
+}
+.data {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+table {
+    width: 100%;
 }
