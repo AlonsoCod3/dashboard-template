@@ -133,6 +133,7 @@
     right: -20px;
     top: 50%;
     transform: translate(100%, -50%);
+    background-color: white;
     color: black;
     width: max-content;
     display: none;
