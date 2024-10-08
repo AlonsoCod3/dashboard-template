@@ -15,6 +15,10 @@ export const routes: Routes = [
                 path:"",
                 loadComponent: () => import("./app/pages/home/home.component").then(m => m.HomeComponent),
             },
+            {
+                path:"config",
+                loadComponent: () => import("./app/pages/config/general/general.component").then(m => m.GeneralComponent),
+            },
         ]
     },
     {   // Error pagina
