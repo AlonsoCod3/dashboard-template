@@ -1,0 +1,56 @@
+<div class="main" [style.background-color]="color">
+    <div class="content">
+      <section class="header">
+        <p>Title</p>
+        <p>Any Option</p>
+      </section>
+      <section class="filter-bars">busqueda</section>
+      <hr>
+      <main class="data">
+        <!-- tabla de datos -->
+        <ng-container *ngIf="dataTable">
+          <table>
+            <thead>
+              <tr>
+                <th *ngFor="let title of titles; let i = index">
+                   {{ title.name }}
+                   <select name="typetable-{{index}}" [(ngModel)]="value_of_columns[i]">
+                      <option value="default" disabled="true" selected>SELECT</option>
+                      <option value="toplevel" >Top Level</option>
+                      <option value="map" >Map</option>
+                    </select>
+                </th>
+                <th *ngIf="options"> OPCIONES </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let value of values;let id = index">
+                <td *ngFor="let title of titles; let i = index">
+                  {{ obtainItem(i, title,value) }}
+                </td>
+                <ng-container *ngIf="options">
+                  <td>
+                    <ng-container *ngFor="let option of optionsValue">
+                      <button class="options" [ngClass]="{'dropdown' : option.list }" (click)="openDrop(option,id)">
+                        {{option.name}}
+                      </button>
+                      <ng-container *ngIf="option.list">
+  
+                        <div class="dropdown-content" id="dropdown-content-{{id}}">
+                          <button class="dropdown-item" *ngFor="let itemList of option.list">
+                            {{itemList}}
+                          </button>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                  </td>
+                </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+  
+        <ng-content select="[section=otherData]"></ng-content>
+      </main>
+    </div>
+  </div>
