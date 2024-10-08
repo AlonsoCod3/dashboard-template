@@ -1,0 +1,11 @@
+<app-base-pages [dataTable]="false" [color]="pickColor">
+    <div section="otherData" class="selector">
+        <ng-container *ngFor="let i of colorpicker">
+            <div class="item">
+                <button [style.background-color]="i" (click)="selectColor(i)" #selector></button>
+                <hr>
+                <span>{{i}}</span>
+        </div>
+    </ng-container>
+</div>
+</app-base-pages>
