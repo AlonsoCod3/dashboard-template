@@ -4,11 +4,12 @@ import { HomeComponent } from '../../home/home.component';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BasePagesComponent } from "../../../base-pages/base-pages.component";
+import { TableComponent } from "../../../components/table/table.component";
 
 @Component({
   selector: 'app-general',
   standalone: true,
-  imports: [NgFor, NgIf, NgClass, HomeComponent, JsonPipe, ReactiveFormsModule, FormsModule, BasePagesComponent],
+  imports: [NgFor, NgIf, NgClass, HomeComponent, JsonPipe, ReactiveFormsModule, FormsModule, BasePagesComponent, TableComponent],
   templateUrl: './general.component.html',
   styleUrls: [
     '../../../base-pages/base-pages.component.css',
@@ -20,7 +21,7 @@ export class GeneralComponent implements OnInit{
 
   table
   colorpicker = ["#1098F7","#B89E97","#DECCCC"]
-  pickColor = ""
+  pickColor = "#aa1f2b"
   ngOnInit(): void {
       this.table= true
   }
