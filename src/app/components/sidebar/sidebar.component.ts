@@ -28,8 +28,9 @@ export class SidebarComponent {
     [ "menu-1", "not" ,"Menu lateral 1", [
       [ "sub-1", "not" ,"SubMenu 1"  ],
       [ "sub-2", "not" ,"SubMenu 2"  ],
-    ]
     ],
+    ],
+    [ "config", "not", "Configuración"]
   ]
   public sidebarToggle(){
     this.isOpen = !this.isOpen
