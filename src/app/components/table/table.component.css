@@ -22,3 +22,9 @@ table {
   padding: 12px 16px;
   z-index: 1;
 }
+tr {
+  /* text-align: center; */
+}
+td {
+  border: 1px solid black;
+}
