@@ -1,9 +1,16 @@
+<label for="all_columns">Cambiar tipo de todas las columnas</label>
+<select id="all_columns" (change)="updateAllColumn($event)">
+  <option [value]="'default'" disabled="true">SELECT</option>
+  <option [value]="'toplevel'" >Top Level</option>
+  <option [value]="'map'" selected>Map</option>
+</select>
 <table>
     <thead>
       <tr>
         <th *ngFor="let title of titles; let i = index">
            {{ title.name }}
-           <select name="typetable-{{index}}" (change)="updateColumn($event, i)">
+           {{ value_of_columns[i] | json}}
+           <select id="typetable-{{i}}" (change)="updateColumn($event, i)" >
               <option [value]="'default'" disabled="true" selected>SELECT</option>
               <option [value]="'toplevel'" >Top Level</option>
               <option [value]="'map'" >Map</option>
@@ -19,18 +26,27 @@
         </td>
         <ng-container *ngIf="options">
           <td>
-            <ng-container *ngFor="let option of optionsValue">
-              <button class="options" [ngClass]="{'dropdown' : option.list }" (click)="openDrop(option,id)">
-                {{option.name}}
-              </button>
-              <ng-container *ngIf="option.list">
-
-                <div class="dropdown-content" id="dropdown-content-{{id}}">
-                  <button class="dropdown-item" *ngFor="let itemList of option.list">
+            <ng-container *ngFor="let option of optionsValue, let option_value_i = index">
+              <ng-template [ngIf]="!option.list" [ngIfElse]="buttonWithList">
+                <!-- Boton sin Dropdown -->
+                <button class="options">
+                  {{option.name}}
+                </button>
+              </ng-template>
+              <ng-template #buttonWithList>
+                <!-- Boton con Dropdown -->
+                <button class="options" [ngClass]="{'dropdown' : option.list }"
+                (click)="openDrop(option,id)" [disabled]="!option.list || option.list.length == 0">
+                  {{option.name}}
+                </button>
+              </ng-template>
+              <div class="dropdown-content" id="dropdown-content-{{id}}" *ngIf="option.list && option.list.length != 0">
+                <ng-container *ngFor="let itemList of option.list , let option_index = index">
+                  <button class="dropdown-item" *ngIf="values_exceptions[id][option_value_i]['exceptions'][itemList] && values_exceptions[id][option_value_i]['exceptions_values'][itemList]">
                     {{itemList}}
                   </button>
-                </div>
-              </ng-container>
+                </ng-container>
+              </div>
             </ng-container>
           </td>
         </ng-container>

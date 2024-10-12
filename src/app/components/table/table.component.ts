@@ -185,25 +185,33 @@ export class TableComponent implements OnInit {
     },
   ]
 
+  value_of_all_columns = "map" //tipo de formato de todas las columnas
   value_of_columns = [] //tipo de formato de cada columna referente a cantidad de titulos
   value_of_item_columns = [] //valor de cada columna
+  values_exceptions = [] //valor de cada columna
   
   optionsValue = [
+    // name = Nombre que se muestra en pantalla
+    // list = Arreglo por si es un drop con opciones secundarias
+    // exceptions = Referente a las opciones de "list", desactivar(opcion de "list") estas opciones
+    // exceptions_values = Referente a las opciones de "list", para desactivar(columna, valor, opcion de "list") estas opciones
     { "name":"editar"},
-    { "name":"opciones", "list":["desafiliar","editar"] }
+    // { "name":"lista"},
+    { "name":"lista", "list":[]},
+    { "name":"opciones", "list":["desafiliar","revisar"], "exceptions":["editar"], "exceptionsValues":[ ["lastName" , "Steer", "editar"] ]} //["subscriptionInfo.affiliationChannel", "telefono"],
   ]
 
   constructor(private component:ElementRef){}
 
   ngOnInit(){
 
-    for(let i of this.titles){
-      let item = {}
-      item[i.name] = {"select":"default", "value":""}
-      this.value_of_columns.push(item)
+    for(var index in this.titles){
+      this.value_of_columns.push(this.value_of_all_columns)
     }
-
     this.updateItems()
+    console.log(this.value_of_item_columns);
+    console.log(this.values_exceptions)
+    
   }
   openDrop(item, index){
     let menu = this.component.nativeElement.querySelector(`#dropdown-content-${index}`)
@@ -214,6 +222,7 @@ export class TableComponent implements OnInit {
     }
     
   }
+
   obtainItem(index, title, value){    
     if (this.value_of_columns[index] == "map"){
       return eval("value."+title.key)
@@ -225,20 +234,106 @@ export class TableComponent implements OnInit {
       return value
     }
   }
+
+  updateAllColumn(event){
+    for(let index in this.value_of_columns){      
+      this.value_of_columns[index]= event.target.value
+      this.component.nativeElement.querySelector(`#typetable-${index}`).value = event.target.value
+    }
+    this.updateItems()
+  }
+
   updateColumn(event, index){
     this.value_of_columns[index] = event.target.value
     this.updateItems()
-
   }
+
   updateItems(){
     this.value_of_item_columns = []
-    for(let item of this.values){
+    for(let item in this.values){
       let row = {}
       for(let value of this.titles){
-        row[value.name] = this.obtainItem(this.titles.indexOf(value),value,item)
+        row[value.name] = this.obtainItem(this.titles.indexOf(value),value,this.values[item])
       }
+      this.values_exceptions[item] = this.obtain_values_exceptions(this.values[item])
+      row["options"] = this.resolve_exceptions(item)
+      
       this.value_of_item_columns.push(row)
     }
+  }
+
+  resolve_exceptions(id){
+    let values_options = []
+    for(let index in this.values_exceptions[id]){
+      let row = {}
+      let option = this.values_exceptions[id][index]
+      if(Object.keys(option).length != 0){
+        for(let item of this.optionsValue){
+          if(item.list && item.list.length != 0){
+            for(let itemList of item.list){
+              if(item.exceptions && item.exceptionsValues){
+                console.log(1);
+                for(let exception_values of item.exceptionsValues){
+                  row[exception_values[2]] = option.exceptions[exception_values[2]] && option.exceptions_values[exception_values[2]]
+                }
+              }
+              else if(item.exceptions){
+                console.log(2);
+                row[itemList] = option.exceptions[itemList]
+              }
+              else if(item.exceptionsValues){
+                console.log(3);
+                for(let exception_values of item.exceptionsValues){
+                  row[exception_values[2]] = option.exceptions_values[exception_values[2]]
+                }
+              }
+              else{
+                console.log(4);
+                row[itemList] = true
+              }
+            }
+          }
+        }
+      }
+      values_options.push(row)
+    }
+    return values_options
+  }
+
+  obtain_values_exceptions(value){
+    let items = []
+    for(var option of this.optionsValue){
+      let items_of_row = {} //valores para cada boton del item "value"
+      
+      // excepciones generales
+      if(option.exceptions){
+        items_of_row["exceptions"] = {}
+        for(let itemList of option.list){
+          if(option.exceptions[option.list.indexOf(itemList)] || option.exceptions.length == 0){
+            items_of_row["exceptions"][itemList] = true
+          }
+          else{
+            items_of_row["exceptions"][itemList] = false
+          }
+        }
+      }
+      // excepciones de valores especificos
+      if(option.exceptionsValues){
+        items_of_row["exceptions_values"] = {}
+        let option_exceptions
+        for(let index_exceptions in option.exceptionsValues){
+          option_exceptions = option.exceptionsValues[index_exceptions]
+          if(option_exceptions[0].includes(".") ){
+            items_of_row["exceptions_values"][option_exceptions[2]] = !(eval("value."+option_exceptions[0]) == option_exceptions[1])
+          }
+          else{
+            items_of_row["exceptions_values"][option_exceptions[2]] = !(value[option_exceptions[0]] == option_exceptions[1])
+          }
+        }
+      }
+      items.push(items_of_row)
+    }
+    return items
   }
 
 }
