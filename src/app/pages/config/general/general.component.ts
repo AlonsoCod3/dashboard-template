@@ -22,10 +22,12 @@ export class GeneralComponent implements OnInit{
   table
   colorpicker = ["#1098F7","#B89E97","#DECCCC"]
   pickColor = "#aa1f2b"
+  values
   ngOnInit(): void {
       this.table= true
+      this.getItems()
   }
-  // url = "https://my.api.mockaroo.com/clientes?key=f23ee800"
+  url = "https://my.api.mockaroo.com/clientes?key=f23ee800"
 
   constructor(private host: ElementRef<HTMLElement>,private http: HttpClient) {
   }
@@ -36,5 +38,13 @@ export class GeneralComponent implements OnInit{
     // this.host.nativeElement.style.setProperty(`--color`,color); //  fucniona con variable host en un compoenent
     this.pickColor = color
     // console.log(document.documentElement)
+  }
+  getItems(){
+    this.http.get(this.url).subscribe(
+      data => {
+        // console.log(data)
+        this.values = data
+      }
+    )
   }
 }
