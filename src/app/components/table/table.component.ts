@@ -1,5 +1,6 @@
 import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
@@ -8,22 +9,18 @@ import { Component, ElementRef, OnInit } from '@angular/core';
     NgIf,
     NgFor,
     NgClass,
+    ReactiveFormsModule,
     JsonPipe
   ],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
+  @Input("values")values
+  @Input("default")values_default:boolean = true
 
-  titles = [
-    {"name":"TITULO", "key":"subscriptionInfo.affiliationChannel", "type":"map"},
-    {"name":"NOMBRE", "key":"lastName", "type":"toplevel"},
-    {"name":"PAIS","key":"id", "type":"toplevel"}
-  ]
-
-  options = true
-
-  values = [
+  default:FormControl
+  default_values = [
     {
         "id": "426b1a93-cdd5-48df-bf5b-af8e04dcd5ec",
         "createdAt": "2024-05-01 02:33:07.747800",
@@ -185,6 +182,19 @@ export class TableComponent implements OnInit {
     },
   ]
 
+  titles = [
+    // {"name":"TITULO", "key":"subscriptionInfo.affiliationChannel", "type":"map"},
+    // {"name":"NOMBRE", "key":"lastName", "type":"toplevel"},
+    // {"name":"PAIS","key":"id", "type":"toplevel"}
+    {"name":"TITULO", "key":"id", "type":"toplevel"},
+    {"name":"NOMBRE", "key":"clientInfo.firstName", "type":"map"},
+    {"name":"PAIS","key":"createdDate", "type":"toplevel"}
+  ]
+
+  options = true
+
+  show_data
+
   value_of_columns = [] //tipo de formato de cada columna referente a cantidad de titulos
   value_of_item_columns = [] //valor de cada columna
   
@@ -196,7 +206,14 @@ export class TableComponent implements OnInit {
   constructor(private component:ElementRef){}
 
   ngOnInit(){
-
+    this.default = new FormControl(this.values_default)
+    if (this.values!= undefined){
+      this.default.setValue(false)
+      this.show_data = this.values
+    }
+    else {
+      this.show_data = this.default_values
+    }
     for(let i of this.titles){
       let item = {}
       item[i.name] = {"select":"default", "value":""}
@@ -204,6 +221,23 @@ export class TableComponent implements OnInit {
     }
 
     this.updateItems()
+    this.updateDefault()
+    
+  }
+  updateDefault(){
+    this.default.valueChanges.subscribe(
+      value =>{
+        this.values_default = value
+        if(value){
+          this.show_data = this.default_values
+        }
+        else{
+          if(this.values!=undefined){
+            this.show_data = this.values
+          }
+        }
+      }
+    )
   }
   openDrop(item, index){
     let menu = this.component.nativeElement.querySelector(`#dropdown-content-${index}`)
@@ -232,7 +266,7 @@ export class TableComponent implements OnInit {
   }
   updateItems(){
     this.value_of_item_columns = []
-    for(let item of this.values){
+    for(let item of this.show_data){
       let row = {}
       for(let value of this.titles){
         row[value.name] = this.obtainItem(this.titles.indexOf(value),value,item)

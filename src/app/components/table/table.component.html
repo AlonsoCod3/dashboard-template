@@ -1,3 +1,7 @@
+<label for="dataTable-default">Datos por defecto</label>
+<input type="checkbox" id="dataTable-default" [formControl]="default">
+{{default.value}}
+{{values_default}}
 <table>
     <thead>
       <tr>
@@ -13,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let value of values;let id = index">
+      <tr *ngFor="let value of show_data;let id = index">
         <td *ngFor="let title of titles; let i = index">
              {{ value_of_item_columns[id][title.name] }}
         </td>
