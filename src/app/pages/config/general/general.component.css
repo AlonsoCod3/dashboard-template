@@ -1,11 +1,13 @@
-:host {
-    --color:grey
-}
 /* ALL CONTENT */
 .main {
     background-color: green;
+} */
+/* TITULOS DE SECCIONES */
+.title_section{
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-block: 10px;
 }
-
 /* GRUPODE BOTON PICKERS */
 .selector {
     display: flex;
@@ -39,4 +41,11 @@
     margin: 0 auto;
     padding: 5px;
     color: #353535;
+}
+.option {
+    padding: 10px;
+    width: fit-content;
+    label {
+        margin-right: 5px;
+    }
 }

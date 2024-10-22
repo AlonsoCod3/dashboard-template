@@ -1,14 +1,31 @@
-<app-base-pages [color]="pickColor">
+<div>
+    <p>{{ titlePage }}</p>
+</div>
+<app-base-pages [color]="pickColor" [title]="title">
     <div section="dataTable">
         <app-table></app-table>
     </div>
-    <div section="otherData" class="selector">
-        <ng-container *ngFor="let i of colorpicker">
-            <div class="item">
-                <button [style.background-color]="i" (click)="selectColor(i)" #selector></button>
-                <hr>
-                <span>{{i}}</span>
-            </div>
-        </ng-container>
+    <div section="otherData">
+        <div class="title_section">
+            <p>Activar opciones</p>
+        </div>
+        <div class="option" *ngFor="let i of options">
+            <label for="{{i.id}}">{{i.label}}</label>
+            <input id="{{i.id}}" type="checkbox">
+        </div>
+    </div>
+    <div section="otherData">
+        <div class="title_section">
+            <p>Cambiar colores</p>
+        </div>
+        <div class="selector">
+            <ng-container *ngFor="let i of colorpicker">
+                <div class="item">
+                    <button [style.background-color]="i" (click)="selectColor(i)" #selector></button>
+                    <hr>
+                    <span>{{i}}</span>
+                </div>
+            </ng-container>
+        </div>
     </div>
 </app-base-pages>
