@@ -12,6 +12,10 @@ import { Component, ElementRef, Input, OnInit } from '@angular/core';
 export class BasePagesComponent implements OnInit{
   @Input("color")color
   @Input("title")title
+  @Input("searchbar")searchbar:boolean = true
+  @Input("tabsData")tabsData = []
+  @Input("anyOption")anyOption:boolean = true
+  @Input("optionButton")optionButton:string = "Any Option"
 
   
   url = "https://my.api.mockaroo.com/clientes?key=f23ee800"
