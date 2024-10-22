@@ -10,10 +10,10 @@ import { BasePagesComponent } from "../../base-pages/base-pages.component";
 })
 export class HomeComponent implements OnInit{
   title
+  titlePage = "Bienvenida"
 
   constructor() {
     this.title = "Bienvenido Usuari@"
-    
   }
   
   ngOnInit(): void {}
