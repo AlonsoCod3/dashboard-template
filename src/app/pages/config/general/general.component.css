@@ -1,7 +1,7 @@
 /* ALL CONTENT */
 .main {
     background-color: green;
-} */
+}
 /* TITULOS DE SECCIONES */
 .title_section{
     font-weight: 600;
@@ -45,7 +45,7 @@
 .option {
     padding: 10px;
     width: fit-content;
-    label {
+    :is(label) {
         margin-right: 5px;
     }
 }
