@@ -10,10 +10,10 @@ import { Component, ElementRef, Input, OnInit } from '@angular/core';
   styleUrls: ['./base-pages.component.css']
 })
 export class BasePagesComponent implements OnInit{
-  @Input("color")color
-  @Input("title")title
+  @Input("color")color:string = ""
+  @Input("title")title:string = ""
   @Input("searchbar")searchbar:boolean = true
-  @Input("tabsData")tabsData = []
+  @Input("tabsData")tabsData:Object = []
   @Input("anyOption")anyOption:boolean = true
   @Input("optionButton")optionButton:string = "Any Option"
 
