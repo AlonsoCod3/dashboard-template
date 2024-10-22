@@ -34,13 +34,14 @@
 /* CONTENT */
 .sidebar {
     position: fixed;
+    top:0px;
     background-color: var(--sidebar-menu-color);
     color: var(--sidebar-menu-text);
     transition: var(--sidebar-time);
     height: 100%;
     width: var(--sidebar-expand-width);
     min-width: var(--sidebar-expand-width);
-    z-index: 10;
+    z-index: 30;
 }
 .sidebar:not(.expanded) {
     width: var(--sidebar-compress-width);
