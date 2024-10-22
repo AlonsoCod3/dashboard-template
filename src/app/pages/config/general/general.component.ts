@@ -14,16 +14,16 @@ import { TableComponent } from "../../../components/table/table.component";
   styleUrls: ['./general.component.css',]
 })
 export class GeneralComponent implements OnInit{
-  @ViewChild("selector") col:ElementRef
+  // @ViewChild("selector") col:ElementRef
   title:string = "Configuración general"
   titlePage:string = "Configuración"
 
-  table
+  table:boolean
   colorpicker = ["#1098F7","#B89E97","#DECCCC"]
   pickColor = "#aa1f2b"
-  values
+  values:Object
   url = "https://my.api.mockaroo.com/clientes?key=f23ee800"
-  options = [] // opciones switch para activar
+  options:Object = [] // opciones switch para activar
 
   constructor(private host: ElementRef<HTMLElement>,private http: HttpClient) {
     this.options = [
