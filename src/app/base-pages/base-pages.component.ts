@@ -21,7 +21,7 @@ export class BasePagesComponent implements OnInit{
   url = "https://my.api.mockaroo.com/clientes?key=f23ee800"
 
   constructor(private http:HttpClient, private component:ElementRef<HTMLElement>) {}
-
+  
   ngOnInit(): void {
     this.component.nativeElement.querySelector(".main").setAttribute("style",`background-color: ${this.color}`)
     // .style.backgroundColor = this.color //

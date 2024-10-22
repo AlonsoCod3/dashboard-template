@@ -16,7 +16,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   styleUrls: ['./table.component.css']
 })
 export class TableComponent implements OnInit {
-  @Input("values")values: Object = null
+  @Input("values")values:Array<object>
   @Input("default")values_default:boolean = true
 
   column_default:FormControl = new FormControl("default")
@@ -52,8 +52,8 @@ export class TableComponent implements OnInit {
 
   show_data
 
-  value_of_columns = [] //tipo de formato de cada columna referente a cantidad de titulos
-  value_of_item_columns = [] //valor de cada columna
+  value_of_columns:Array<string> = [] //tipo de formato de cada columna referente a cantidad de titulos
+  value_of_item_columns:Array<object> = [] //valor de cada columna
   
   optionsValue = [
     { "name":"editar"}, //option
@@ -113,7 +113,7 @@ export class TableComponent implements OnInit {
     }
     
   }
-  obtainItem(index:number, title:{name,key,type}, value:Array<string>){
+  obtainItem(index, title, value){
     if (this.value_of_columns[index] == "map"){
       return eval("value."+title.key)
     }

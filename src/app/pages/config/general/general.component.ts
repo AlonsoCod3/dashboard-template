@@ -23,7 +23,7 @@ export class GeneralComponent implements OnInit{
   pickColor = "#aa1f2b"
   values:Object
   url = "https://my.api.mockaroo.com/clientes?key=f23ee800"
-  options:Object = [] // opciones switch para activar
+  options:Object // opciones switch para activar
 
   constructor(private host: ElementRef<HTMLElement>,private http: HttpClient) {
     this.options = [
@@ -36,10 +36,10 @@ export class GeneralComponent implements OnInit{
         "label":"Activar Roles",
       },
     ]
+    this.table= true
   }
   ngOnInit(): void {
-    this.table= true
-    // this.getItems()
+    this.getItems()
 }
 
   selectColor(color:string){
