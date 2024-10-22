@@ -19,9 +19,9 @@
             <p>Cambiar colores</p>
         </div>
         <div class="selector">
-            <ng-container *ngFor="let i of colorpicker">
+            <ng-container *ngFor="let color of colorpicker">
                 <div class="item">
-                    <button [style.background-color]="i" (click)="selectColor(i)" #selector></button>
+                    <button [style.background-color]="color" (click)="selectColor(color)" #selector></button>
                     <hr>
                     <span>{{i}}</span>
                 </div>

@@ -42,7 +42,7 @@ export class GeneralComponent implements OnInit{
     // this.getItems()
 }
 
-  selectColor(color){
+  selectColor(color:string){
     // console.log(this.col.nativeElement.closest(".main").style.background = color)
     // document.documentElement.style.setProperty(`--color`,color); // solo funciona con root
     // this.host.nativeElement.style.setProperty(`--color`,color); //  fucniona con variable host en un compoenent
