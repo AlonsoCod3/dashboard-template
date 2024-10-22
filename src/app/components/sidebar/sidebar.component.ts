@@ -19,7 +19,7 @@ export class SidebarComponent {
 
   public NAME:string = "Dashboard Template"
 
-  @Input() isOpen: boolean
+  @Input() isOpen: boolean = false
   @Output() toggleSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   // url - icon - nombre - sub
