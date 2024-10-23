@@ -13,13 +13,15 @@
     </select>
   </div>
 </div>
+<!-- CONTAINER -->
 <div class="table container">
   <table>
     <thead>
       <tr>
         <th *ngFor="let title of titles; let i = index">
           {{ title.name }}
-          <select class="select_type" name="typetable-{{i}}" (change)="log($event, i)" [value]="column_default.value">
+          <select class="select_type" name="typetable-{{i}}" (change)="updateColumn($event, i)"
+            [value]="column_default.value">
             <option value="default" disabled="true">SELECT</option>
             <option value="toplevel">Top Level</option>
             <option value="map">Map</option>
@@ -28,9 +30,18 @@
         <th *ngIf="options" rowspan="2">Opciones</th>
       </tr>
     </thead>
-    <tbody>
+    <!-- SKELETON LOADER -->
+    <tbody class="loading" *ngIf="!show_data">
+      <tr *ngFor="let value of [].constructor(rowLoad)">
+        <td *ngFor="let cell of [].constructor(columnLoad)">
+          <span class="skeleton"></span>
+        </td>
+    </tr>
+    </tbody>
+    <!-- SHOW DATA -->
+    <tbody *ngIf="show_data">
       <tr *ngFor="let value of show_data;let id = index">
-        <td *ngFor="let title of titles; let i = index" #cellTable>
+        <td *ngFor="let title of titles; let i = index">
           {{ value_of_item_columns[id][title.name] }}
           <span>
             <i class="copy_clip" (click)="copyClip(cellTable, value_of_item_columns[id][title.name])">O</i>
