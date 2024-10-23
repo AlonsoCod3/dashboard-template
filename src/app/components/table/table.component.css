@@ -19,6 +19,13 @@
     }
   }
 }
+/* SKELETON */
+.loading .skeleton {
+  display: flex;
+  height: 100%;
+  background-color: grey;
+  border-radius: 5px  ;
+}
 /* CONTENEDOR TABLA */
 .table {
   overflow: auto;
