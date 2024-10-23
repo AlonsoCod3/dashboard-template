@@ -1,7 +1,7 @@
 <div class="option_table container">
   <div class="config">
     <label for="dataTable-default">Datos por defecto: </label>
-    <input type="checkbox" id="dataTable-default" [formControl]="default">
+    <input type="checkbox" id="dataTable-default" [formControl]="default_switch">
   </div>
   <div class="config">
     <label for="dataTable-default">Tipo de datos: </label>
@@ -42,7 +42,7 @@
     <tbody *ngIf="show_data">
       <tr *ngFor="let value of show_data;let id = index">
         <td *ngFor="let title of titles; let i = index">
-          {{ value_of_item_columns[id][title.name] }}
+           {{ value_of_item_columns[id][i] }}
           <span>
             <i class="copy_clip" (click)="copyClip(cellTable, value_of_item_columns[id][title.name])">O</i>
           </span>

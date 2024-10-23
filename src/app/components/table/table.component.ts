@@ -22,22 +22,23 @@ export class TableComponent implements OnInit {
   @Input("rowLoad") rowLoad: number = 2
   columnLoad: number
 
-  column_default: FormControl = new FormControl("toplevel")
-  default: FormControl
+  values_observable
+  column_default: FormControl = new FormControl("default")
+  default_switch: FormControl
   default_values = [
     {
-      "id": "426b1a93-cdd5-48df-bf5b-af8e04dcd5ec",
-      "createdDate": "2024-05-01",
-      "firstName": "Corilla",
+      "id": "cdd5",
+      "createdDate": "2022-05-01",
+      "firstName": "Omar",
     },
     {
-      "id": "001775ed-8afd-49e5-a51e-ffc0e41a0d1e",
-      "createdDate": "2024-05-01",
+      "id": "ffc0e41a0d1e",
+      "createdDate": "2021-05-01",
       "firstName": "Linell",
     },
     {
-      "id": "f8f025d6-d3fa-4bcd-81f5-c0980734865f",
-      "createdDate": "2024-05-01",
+      "id": "4bcd",
+      "createdDate": "2029-05-01",
       "firstName": "Adriaens",
     },
   ]
@@ -71,80 +72,96 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.default = new FormControl(this.values_default)
+    this.default_switch = new FormControl(this.values_default)
+    for (let _ of this.titles) {
+      this.value_of_columns.push(this.column_default.value)
+    }
 
-    if (this.default.value) {
+    if (this.default_switch.value) {
       this.show_data = this.default_values
-      this.updateItems()
+      // this.updateItems()
+      this.firstchargeItems()
     }
     else {
       this.values.subscribe(
         value => {
           this.show_data = value
-          this.updateItems()
+          this.values_observable = value
+          this.firstchargeItems()
         }
       )
+      this.updateDefault()
     }
 
-    for (let _ of this.titles) {
-      this.value_of_columns.push(this.column_default.value)
-    }
-    this.updateDefault()
     this.updateDefaultColumns()
   }
-  updateDefaultColumns() {
-    this.column_default.valueChanges.subscribe(
-      value => {
-        this.value_of_columns.map((_, i) => { this.value_of_columns[i] = value })
-        this.updateItems()
-      }
-    )
-  }
-  updateDefault() {
-    this.default.valueChanges.subscribe(
-      value => {
-        this.values_default = value
-        if (value) {
-          this.show_data = this.default_values
-        }
-        else {
-          if (this.values != undefined) {
-            this.show_data = this.values
-          }
-        }
-      }
-    )
-  }
-  openDrop(item: HTMLElement, index: string) {
-    let menu = this.component.nativeElement.querySelector(`#dropdown-content-${index}`)
-    menu.classList.contains("d-block") ? menu.classList.remove("d-block") : menu.classList.add("d-block")
-  }
-  obtainItem(index, title, value) {
-    let notFound = `Not found : ${title.key}`
-    if (this.value_of_columns[index] == "map") {
-      return eval("value." + title.key) ? eval("value." + title.key) : notFound
-    }
-    else if (this.value_of_columns[index] == "toplevel") {
-      return title.key in value ? value[title.key] : notFound
-    }
-    else {
-      return value ? value : notFound
-    }
-  }
-  updateColumn(event, index) {
-    this.value_of_columns[index] = event.target.value
-    this.updateItems()
-  }
-  updateItems() {
+
+  firstchargeItems() { //Crea matriz de datos de la primera carga
     this.value_of_item_columns = []
     for (let item of this.show_data) {
       let row = {}
-      for (let value of this.titles) {
-        row[value.name] = this.obtainItem(this.titles.indexOf(value), value, item)
+      for (let title_index in this.titles) {
+        row[title_index] = this.obtainItem(title_index, this.titles[title_index], item)
       }
       this.value_of_item_columns.push(row)
     }
   }
+
+  updateDefault() { //Actualiza switch para mostrar data por defecto o data obtenida
+    this.default_switch.valueChanges.subscribe(
+      value => {
+        this.values_default = value
+        this.show_data = value ? this.default_values : this.values_observable
+        this.updateItemsOfAllColumn()
+      }
+    )
+  }
+
+  openDrop(item: HTMLElement, index: string) {
+    let menu = this.component.nativeElement.querySelector(`#dropdown-content-${index}`)
+    menu.classList.contains("d-block") ? menu.classList.remove("d-block") : menu.classList.add("d-block")
+  }
+
+  updateColumn(event, index) { //Actualiza valor de typo de una sola columna
+    this.value_of_columns[index] = event.target.value
+    this.updateItemsOfColumn(index)
+  }
+
+  updateDefaultColumns() { //Actualiza valor de typo de todas las columnas
+    this.column_default.valueChanges.subscribe(
+      value => {
+        this.value_of_columns.map((_, i) => { this.value_of_columns[i] = value })
+        this.updateItemsOfAllColumn()
+      }
+    )
+  }
+
+  updateItemsOfColumn(index) { //Actualiza valores de una sola columna
+    this.value_of_item_columns.map((row, i) => {
+      row[index] = this.obtainItem(index, this.titles[index], this.show_data[i])
+    })
+  }
+
+  updateItemsOfAllColumn() { //Actualiza valores de todas las columnas
+    this.value_of_item_columns.map((row, i) => {
+      this.value_of_columns.map((column, column_index) => {
+        row[column_index] = this.obtainItem(column_index, this.titles[column_index], this.show_data[i])
+      })
+    })
+  }
+
+  obtainItem(index, title, value = this.show_data) {
+    let notFound = `Not found : ${title.key}`
+    if (this.value_of_columns[index] == "map") {
+      try { return eval(`value.${title.key}`) }
+      catch (e) { console.log(e.message); return notFound }
+    }
+    else if (this.value_of_columns[index] == "toplevel") {
+      return title.key in value ? value[title.key] : notFound
+    }
+    else { return value ? value : notFound }
+  }
+
   copyClip(item: HTMLElement, text: string) {
     // item.select(); // solo para input
     // item.setSelectionRange(0, 99999); // For mobile devices
