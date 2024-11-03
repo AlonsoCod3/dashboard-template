@@ -38,8 +38,84 @@ export class GeneralComponent implements OnInit{
     this.table= true
   }
   ngOnInit(): void {
-    this.getItems()
-}
+    // this.getItems()
+  }
+  // ngAfterViewInit(){
+  // }
+
+  targetData:any
+  parent:any
+  onDragStart(e){
+    this.targetData = e
+    this.parent = this.targetData.target.parentNode
+  }
+  onDrag(e){
+    e.preventDefault()
+    if (e.target != this.targetData.target){
+      if (e.clientY > this.targetData.clientY){ // item hacia abajo
+        if(e.target.nextElementSibling){
+          this.parent.insertBefore(this.targetData.target, e.target.nextElementSibling)
+        }
+        else{
+          this.parent.after(this.targetData.target)
+        }
+      }
+      else{ // item hacia arriba
+        this.parent.insertBefore(this.targetData.target, e.target)
+      }
+    }
+  }
+  onDragEnd(e){
+    e.preventDefault()
+    console.log("fin")
+    this.targetData.target.classList.remove("active")
+    this.targetData = ""
+    this.parent = ""
+  }
+  onDrop(e){
+    e.preventDefault()
+  }
+  onDragLeave(e){
+    e.preventDefault()
+  }
+  valueColumns
+  createColumns(input){
+    if (Number(input.value)){
+      let numberOfColumns = Number(input.value)
+      if (this.valueColumns){
+        if(numberOfColumns > this.valueColumns.length){//mayor
+          let newValue = (numberOfColumns - this.valueColumns.length)
+          for(let row = 0; row < newValue; row ++){
+            this.valueColumns.push("Column")
+          }
+        }
+        else if(numberOfColumns < this.valueColumns.length){//menor
+          let newValue = (this.valueColumns.length - numberOfColumns)
+          for(let row = 0; row < newValue; row ++){
+            this.valueColumns.pop()
+          }
+        }
+      }
+      else {
+        let rowo:Array<string> = []
+        for(let row = 0; row < numberOfColumns; row ++){
+          rowo.push("Column")
+        }
+        this.valueColumns = rowo
+      }
+    }
+  }
+  editColumn(button:any, input:any, index:any){
+    button.setAttribute("hidden", "")
+    input.removeAttribute("hidden")
+    input.focus()
+    input.select()
+  }
+  setColumn(button:any, input:any, index:any){
+    this.valueColumns[index] =  input.value
+    input.setAttribute("hidden", "")
+    button.removeAttribute("hidden")
+  }
 
   selectColor(color:string){
     // console.log(this.col.nativeElement.closest(".main").style.background = color)
@@ -56,4 +132,13 @@ export class GeneralComponent implements OnInit{
       }
     )
   }
+  // log(event){
+  //   console.log(event)
+  //   console.log(event.target.getBoundingClientRect())
+  //   event.target.style.setProperty('transform', 'translate(0,)')
+  //   let active = document.querySelector(".item_drag.active") as HTMLElement
+  //   console.log(active)
+  //   console.log(active.style)
+  // }
+
 }

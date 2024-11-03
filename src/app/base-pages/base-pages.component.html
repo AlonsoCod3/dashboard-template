@@ -4,7 +4,7 @@
         <div class="title">
 
           <ng-template [ngIf]="title" [ngIfElse]="withouttitle">
-            <p>{{ title }}</p>
+            <h2>{{ title }}</h2>
           </ng-template>
           <ng-template #withouttitle>
             <p>Default Title To Section</p>
