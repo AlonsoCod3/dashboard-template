@@ -36,7 +36,8 @@
             </div>
             <div class="group">
                 <label for="">Ingresa n&uacute;mero de columnas</label>
-                <input type="text" placeholder="N&uacute;mero de columnas" (change)="createColumns(numberOfColumns)" #numberOfColumns>
+                <input type="number" placeholder="N&uacute;mero de columnas" (change)="createColumns(numberOfColumns)"
+                    #numberOfColumns>
                 <!--  -->
                 <div class="group" *ngIf="valueColumns">
                     <section>
@@ -44,17 +45,18 @@
                     </section>
                     <section class="names_columns">
                         <ng-container *ngFor="let i of valueColumns;let index = index">
-                            <div class="item_drag item_{{index}}"
-                                draggable="true"
-                                (dragover)="onDrag($event)"
-                                (dragstart)="onDragStart($event)"
-                                (dragend)="onDragEnd($event)"
-                                (click)="editColumn(valueColumnButton, valueColumnInput, index)"
-                                #valueColumnButton
-                                >
-                                {{i}}
+                            <div class="drag item_{{index}}"
+                                draggable="true" (dragover)="onDrag($event)"
+                                (dragstart)="onDragStart($event)" (dragend)="onDragEnd($event)" name="valueColumn_{{index}}">
+                                <div
+                                    (click)="editColumn(valueColumnButton, valueColumnInput, index)" #valueColumnButton>
+                                    {{ i }}
+                                </div>
+                                <input value="{{i}}" 
+                                    #valueColumnInput
+                                    (change)="setColumn(valueColumnButton, valueColumnInput, index)" hidden disabled
+                                    (keydown.esc)="setColumn(valueColumnButton, valueColumnInput, index)" hidden disabled>
                             </div>
-                            <input type="text" [value]="i" hidden #valueColumnInput (change)="setColumn(valueColumnButton, valueColumnInput, index)">
                         </ng-container>
                     </section>
                     <!-- <section>

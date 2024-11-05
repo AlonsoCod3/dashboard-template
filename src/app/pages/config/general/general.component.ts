@@ -51,26 +51,39 @@ export class GeneralComponent implements OnInit{
   }
   onDrag(e){
     e.preventDefault()
-    if (e.target != this.targetData.target){
+    if (e.target.parentNode != this.targetData.target){
       if (e.clientY > this.targetData.clientY){ // item hacia abajo
-        if(e.target.nextElementSibling){
-          this.parent.insertBefore(this.targetData.target, e.target.nextElementSibling)
-        }
-        else{
-          this.parent.after(this.targetData.target)
+        if(e.target.parentNode != this.parent) {
+          // console.log(e.target.parentNode.classList[1].replace("item_", ""))
+          if(e.target.parentNode.nextSibling){
+            return this.parent.insertBefore(this.targetData.target, e.target.parentNode.nextSibling)
+          }
+          else{
+            return this.parent.appendChild(this.targetData.target)
+          }
         }
       }
       else{ // item hacia arriba
-        this.parent.insertBefore(this.targetData.target, e.target)
+        if(e.target.parentNode != this.parent) {
+          // console.log(e.target.parentNode.classList[1].replace("item_", ""))
+          return this.parent.insertBefore(this.targetData.target, e.target.parentNode)
+        }
       }
     }
   }
   onDragEnd(e){
     e.preventDefault()
-    console.log("fin")
-    this.targetData.target.classList.remove("active")
     this.targetData = ""
     this.parent = ""
+    // this.updateValues() Queda pendientes
+  }
+  updateValues(){
+    let newArray = []
+    for(let row = 0; row < this.valueColumns.length; row ++){
+      newArray.push(this.parent.children[row].innerText)
+    }
+    // this.parent = ""
+    this.valueColumns = newArray
   }
   onDrop(e){
     e.preventDefault()
@@ -85,9 +98,11 @@ export class GeneralComponent implements OnInit{
       if (this.valueColumns){
         if(numberOfColumns > this.valueColumns.length){//mayor
           let newValue = (numberOfColumns - this.valueColumns.length)
+          let newArray = this.valueColumns
           for(let row = 0; row < newValue; row ++){
-            this.valueColumns.push("Column")
+            newArray.push("Column")
           }
+          this.valueColumns = newArray
         }
         else if(numberOfColumns < this.valueColumns.length){//menor
           let newValue = (this.valueColumns.length - numberOfColumns)
@@ -105,15 +120,18 @@ export class GeneralComponent implements OnInit{
       }
     }
   }
-  editColumn(button:any, input:any, index:any){
+  editColumn(button, input, index:any){
     button.setAttribute("hidden", "")
     input.removeAttribute("hidden")
+    input.removeAttribute("disabled")
+    input.value = this.valueColumns[index]
     input.focus()
     input.select()
   }
-  setColumn(button:any, input:any, index:any){
-    this.valueColumns[index] =  input.value
+  setColumn(button, input, index:any){
+    this.valueColumns[index] = input.value
     input.setAttribute("hidden", "")
+    input.setAttribute("disabled", "")
     button.removeAttribute("hidden")
   }
 

@@ -160,6 +160,7 @@
   }
   section.names_columns {
     display: flex;
+    flex-direction: column;
     gap: 3px;
     div {
       padding: 3px 5px;
